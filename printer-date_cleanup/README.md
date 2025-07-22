@@ -16,16 +16,18 @@ Ensure a dedicated directory for your custom scripts exists within your `printer
 ```bash
 mkdir -p ~/printer_data/scripts
 ```
-2. Create the Script File (move_backups.sh)
+
+### 2. Create the Script File (move_backups.sh)
 
 Create a new file named move_backups.sh inside the ~/printer_data/scripts/ directory.
-```Bash
 
+```Bash
 nano ~/printer_data/scripts/move_backups.sh
 ```
-Paste the following script content into the nano editor, then save and exit (press Ctrl+X, then Y, then Enter):
-```Bash
 
+Paste the following script content into the nano editor, then save and exit (press Ctrl+X, then Y, then Enter):
+
+```Bash
 #!/bin/bash
 
 # --- Configuration ---
@@ -59,23 +61,28 @@ ls -t "$CONFIG_DIR"/printer-*.cfg 2>/dev/null | tail -n +$(($KEEP_COUNT + 1)) | 
 
 echo "Backup move complete."
 ```
+
 3. Make the Script Executable
 
 Give the script executable permissions:
-```Bash
 
+```Bash
 chmod +x ~/printer_data/scripts/move_backups.sh
 ```
+
 4. Configure Cron for Automated Execution
 
 Schedule the script to run automatically each time your Raspberry Pi (or Klipper host machine) boots up.
 
 Open your crontab for editing:
-```Bash
 
+Bash
+```
 crontab -e
 ```
+
 At the end of the file, add the following line. This tells cron to execute your script after every reboot, redirecting its output (including any echo statements from the script) to /dev/null.
+
 ```
 @reboot /bin/bash /home/pi/printer_data/scripts/move_backups.sh > /dev/null 2>&1
 ```
