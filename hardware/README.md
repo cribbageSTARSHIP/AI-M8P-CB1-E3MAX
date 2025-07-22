@@ -103,4 +103,38 @@ Below is an explanation of each `.cfg` file and subdirectory within this `hardwa
 #### `hardware/heaters/extruder.cfg`
 
 * **Purpose:** Defines the hotend extruder settings, including its step/direction pins, rotation distance, nozzle/filament diameter, heater pin, temperature sensor, and TMC2209 driver settings.
-* **Contents:** Contains `[extr
+* **Contents:** Contains `[extruder]` and `[tmc2209 extruder]` sections.
+
+#### `hardware/heaters/heater_bed.cfg`
+
+* **Purpose:** Defines the heated bed settings, including its heater pin and temperature sensor type and pin.
+* **Contents:** Contains the `[heater_bed]` section.
+
+### `hardware/fans.cfg`
+
+* **Purpose:** Defines all cooling fans on the printer.
+* **Contents:** Contains `[fan]` (for part cooling) and `[heater_fan hotend_fan]` sections.
+
+### `hardware/temperature_sensors.cfg`
+
+* **Purpose:** Defines additional temperature sensors beyond those directly associated with heaters, such as a main MCU temperature sensor or chamber temperature sensor.
+* **Contents:** Contains a `[temperature_sensor ebb36]` section (for the toolhead MCU temperature).
+
+## 4. Adding or Modifying Hardware
+
+To add new hardware or modify existing configurations:
+
+1.  **Identify the Category:** Determine which logical category the hardware component belongs to.
+2.  **Create/Select File:** If an appropriate `.cfg` file or subdirectory already exists in `hardware/`, add or modify the relevant section there. If not, create a new `.cfg` file (e.g., `hardware/new_sensor.cfg`) or even a new subdirectory if a group of components needs it.
+3.  **Add to `hardware_includes.cfg`:** If you created a new `.cfg` file or subdirectory, remember to add an `[include hardware/path/to/your_new_file.cfg]` line to your `hardware_includes.cfg` file.
+4.  **Restart Klipper:** Always restart the Klipper firmware after making changes to your configuration files.
+
+## 5. Benefits of this Setup
+
+* **Modularity:** Each hardware component or group has its own dedicated configuration file, making the setup highly modular.
+* **Clarity:** It's immediately evident where to find settings for a specific component (e.g., "Where are my Z motor settings? -> `hardware/steppers/stepper_z.cfg`").
+* **Ease of Maintenance:** Debugging, upgrading, or swapping out components becomes significantly easier as changes are confined to smaller, relevant files.
+* **Readability:** No more scrolling through hundreds of lines in a single file to find one setting.
+* **Scalability:** Effortlessly add new hardware without making the main configuration cumbersome.
+
+By maintaining this structured `hardware/` directory, your Klipper configuration will be robust, organized, and much simpler to manage over time.
