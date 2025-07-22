@@ -76,8 +76,7 @@ Schedule the script to run automatically each time your Raspberry Pi (or Klipper
 
 Open your crontab for editing:
 
-Bash
-```
+```Bash
 crontab -e
 ```
 
@@ -86,6 +85,7 @@ At the end of the file, add the following line. This tells cron to execute your 
 ```
 @reboot /bin/bash /home/pi/printer_data/scripts/move_backups.sh > /dev/null 2>&1
 ```
+
 (Important Note: Double-check that /home/pi/ is the correct home directory for the user running Klipper on your system. If your username is different (e.g., prizm), you should adjust the path accordingly, e.g., /home/prizm/printer_data/scripts/move_backups.sh.)
 
 Save and exit the crontab editor.
@@ -93,10 +93,11 @@ Save and exit the crontab editor.
 5. (Optional) Create Backup Directory Manually
 
 While the script will automatically create the printer_cfg-old directory if it doesn't exist, you can create it manually once if you prefer:
-```Bash
 
+```Bash
 mkdir -p ~/printer_data/config/printer_cfg-old/
 ```
+
 6. Script Configuration (Variables within move_backups.sh)
 
 You can customize the script's behavior by editing the variables at the top of the move_backups.sh file:
