@@ -67,4 +67,66 @@ Below is an explanation of each `.cfg` file within this `macros/` directory and 
     * `CANCEL_PRINT`: Aborts the current print, turns off heaters, parks the toolhead, and resets the SD card.
     * `START_PRINT` (optional): An alias for `PRINT_START`, useful for slicers that output `START_PRINT` by default.
 
-### `macros/
+### `macros/filament_handling.cfg`
+
+* **Purpose:** Houses macros related to loading, unloading, and changing filament.
+* **Key Macros:**
+    * `FILAMENT_CHANGE_M600`: Overrides the standard M600 G-code for filament changes, pausing the print and providing instructions.
+    * `FILAMENT_LOAD`: Automates the process of loading new filament.
+    * `FILAMENT_UNLOAD`: Automates the process of unloading filament.
+
+### `macros/diagnostics_utilities.cfg`
+
+* **Purpose:** Contains macros designed for testing, diagnostics, and general utility functions that don't directly fall into print control or filament handling.
+* **Key Macros:**
+    * `DIAGS_TEST_SPEED` (or `TEST_SPEED`): A comprehensive macro for testing maximum printer speeds and accelerations, including pattern movements and position checks for skipped steps.
+    * `DIAGS_BED_HEATSOAK` (or `HEAT_BED_FOR_TIME`): Heats the print bed to a specified temperature and holds it for a set duration, useful for heat soaking the printer's enclosure.
+
+### `macros/compatibility_overrides.cfg`
+
+* **Purpose:** Used for macros that override standard G-code commands (like `G29` for bed leveling) or provide compatibility layers for specific features.
+* **Key Macros:**
+    * `G29`: Overrides the default `G29` command to perform an adaptive bed mesh calibration, often integrated with KAMP (Klipper Adaptive Meshing & Purging).
+
+### `macros/helper_macros.cfg`
+
+* **Purpose:** Stores internal "helper" macros, often prefixed with an underscore (`_`), that are not intended to be called directly by the user or slicer but are utilized by other primary macros (e.g., `PRINT_START` calls `_PRINT_START_LOGIC`).
+* **Key Macros:**
+    * `_PRINT_START_LOGIC`: The detailed G-code sequence that performs the actual print startup routine (homing, pre-heating, bed mesh, final heating, etc.). This is the comprehensive logic previously found in a monolithic `PRINT_START`.
+    * `_PRINT_END_LOGIC`: The detailed G-code sequence for safely ending a print (retracting, parking, turning off heaters).
+    * `_TOOLHEAD_PARK_PAUSE_CANCEL`: A reusable routine to safely park the toolhead, used by `PAUSE` and `CANCEL_PRINT`.
+    * `_CG28`: A conditional homing macro that only executes `G28` if the printer is not already homed on all axes.
+
+## 4. Slicer Integration
+
+To leverage this macro setup, ensure your slicer's custom G-code settings are configured as follows:
+
+* **Start G-code:**
+    ```gcode
+    PRINT_START BED_TEMP=[first_layer_bed_temperature] EXTRUDER_TEMP=[first_layer_temperature]
+    ```
+    *(Note: Parameter names might vary slightly depending on your slicer. Consult your slicer's documentation if `[first_layer_bed_temperature]` or `[first_layer_temperature]` don't work and use `{bed_temperature}` and `{hotend_temperature[0]}` if you want to be generic).*
+
+* **End G-code:**
+    ```gcode
+    PRINT_END
+    ```
+
+## 5. Adding New Macros
+
+To add new macros to your configuration:
+
+1.  **Identify the Category:** Determine which logical category your new macro best fits into (e.g., calibration, maintenance, specific hardware features).
+2.  **Create/Select File:** If an appropriate `.cfg` file already exists in `macros/`, add your new macro definition there. If not, create a new `.cfg` file (e.g., `macros/my_new_category.cfg`).
+3.  **Add to `macros_includes.cfg`:** If you created a new `.cfg` file, remember to add an `[include macros/my_new_category.cfg]` line (uncommenting it if it's a placeholder) to your `macros_includes.cfg` file.
+4.  **Restart Klipper:** Always restart the Klipper firmware after making changes to your configuration files.
+
+## 6. Benefits of this Setup
+
+* **Organization:** Keeps related macros together, preventing a single, unwieldy file.
+* **Readability:** Easier to find, understand, and review specific macro functions.
+* **Maintainability:** Changes are localized to specific files, reducing the risk of accidental breakage elsewhere.
+* **Scalability:** Simple to add new macro categories and expand your configuration without clutter.
+* **Collaboration:** (Even for solo users!) Easier to track changes with version control (e.g., Git).
+
+By following this structure, your Klipper configuration will remain clean, efficient, and easy to manage as your printer setup evolves.
