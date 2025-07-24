@@ -113,7 +113,7 @@ Now, we prepare the Klipper configuration directories.
      ```
 
 4. **Create and Include the Macro File:**  
-   Create a new file at `printer_data/config/macros/pid_loader.cfg`.  
+   Create a new file at `printer_data/config/macros/calibration/pid_loader.cfg`.  
    Then, add the following line to your `printer_data/config/macros/macros_includes.cfg` to ensure Klipper loads it:
    ```ini
    [include pid_loader.cfg]
@@ -124,7 +124,7 @@ Now, we prepare the Klipper configuration directories.
 
 ## Step 3: The Automation Macros Explained
 
-Copy and paste the entire code block below into your new `printer_data/config/macros/pid_loader.cfg` file. This version uses dynamic paths (`~/`) which Klipper will automatically resolve to the correct home directory for the scripts.
+Copy and paste the entire code block below into your new `printer_data/config/macros/calibration/pid_loader.cfg` file. This version uses dynamic paths (`~/`) which Klipper will automatically resolve to the correct home directory for the scripts.
 
 ```ini
 # Klipper Dynamic PID Profile System Macros
@@ -231,7 +231,7 @@ LOAD_PID_PROFILE FILAMENT=asa BED_TEMP=105 EXTRUDER_TEMP=260
 
 For your most frequently used profiles, creating a dashboard button is convenient.
 
-- **Edit `pid_loader.cfg`:** Open your `printer_data/config/macros/pid_loader.cfg` file.
+- **Edit `pid_loader.cfg`:** Open your `printer_data/config/macros/calibration/pid_loader.cfg` file.
 - **Add a Button Macro:** Add a new `[gcode_macro]` for each button you want.  
   Example for a new TPU profile:
   ```ini
