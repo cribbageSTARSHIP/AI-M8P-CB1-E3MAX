@@ -80,16 +80,9 @@ Here is a recommended way to sort your current macros:
 
 Once you save your changes, your Mainsail dashboard will update with a much cleaner, organized layout for your macros.
 
-[gcode_macro BED_MESH_CALIBRATE]
-description: Homes the printer and then performs bed mesh calibration.
-gcode:
-    G28
-    G29
-
-AI-M8P-CB1-E3MAX\printer_data
-
 [gcode_macro RUN_BED_MESH]
-description: Homes the printer and then performs bed mesh calibration.
+description: Runs a KAMP adaptive bed mesh.
 gcode:
-    G28
-    BED_MESH_CALIBRATE
+    BED_MESH_CLEAR
+    BED_MESH_CALIBRATE ADAPTIVE=1
+
