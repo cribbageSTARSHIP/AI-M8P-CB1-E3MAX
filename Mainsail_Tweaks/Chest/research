@@ -62,7 +62,7 @@ Here is a recommended way to sort your current macros:
 
     Calibration Group
 
-        G29
+        RUN_BED_MESH
 
         VORON PURGE
 
@@ -80,9 +80,5 @@ Here is a recommended way to sort your current macros:
 
 Once you save your changes, your Mainsail dashboard will update with a much cleaner, organized layout for your macros.
 
-[gcode_macro RUN_BED_MESH]
-description: Runs a KAMP adaptive bed mesh.
-gcode:
-    BED_MESH_CLEAR
-    BED_MESH_CALIBRATE ADAPTIVE=1
+
 
