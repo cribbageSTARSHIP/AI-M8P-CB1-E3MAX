@@ -80,11 +80,15 @@ Below is an explanation of each subdirectory and its contents within the `macros
     * **`pid_loader.cfg`**
         * **Purpose:** Defines macros for the dynamic PID profile saving and loading system.
         * **Key Macros:** `SAVE_PID_TO_PROFILE`, `LOAD_PID_PROFILE`.
+    * **`offset_loader.cfg`**
+        * **Purpose:** Defines macros for managing Z-offset profiles using the klipper-z-calibration plugin.
+        * **Key Macros:** `CALIBRATE_Z_OFFSET` and various `SET_PROFILE_*` macros for loading specific offsets.
     * **`diagnostics_utilities.cfg`**
         * **Purpose:** Contains utility macros for running diagnostic tests.
         * **Key Macros:** `DIAGS_TEST_SPEED`, `DIAGS_BED_HEATSOAK`.
     * **`calibration.cfg`**
-        * **Purpose:** (If used) A central place for various calibration macros.
+        * **Purpose:** A central place for general calibration macros and utility commands.
+        * **Key Macros:** `RUN_BED_MESH`, `PREPARE_PROBE_CALIBRATION`, `ACCEPT`, `SAVE_CONF`.
 
 ### `macros/overrides/` (Directory)
 
